@@ -1,0 +1,6 @@
+* Python 3.10 or higher
+* NumPy
+* OpenCV
+* SciPy
+* Matplotlib
+* Scikit-image
