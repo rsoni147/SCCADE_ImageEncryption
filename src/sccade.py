@@ -130,27 +130,6 @@ def applyCA(image: np.ndarray, num_iters, encrypt=True):
         left = num_bin[-1] if encrypt else new_bin[-1]
     return flat.reshape(image.shape)
 
-def encrypt_xor(image: np.ndarray, key):
-    binkey = bin(key)[2:].zfill(128)
-    key_arr = np.zeros((4, 4), dtype=int)
-    k = 0
-    for i in range(4):
-        for j in range(4):
-            key_arr[i][j] = int(binkey[k:k+8], 2)
-            k += 8
-    h, w, _ = image.shape
-    for row in range(h):
-        for col in range(w):
-            pix = image[row][col].copy()
-            for i in range(3):
-                image[row][col][i] ^= key_arr[row % 4][col % 4]
-                if row > 0 and col > 0:
-                    image[row][col][i] ^= image[row - 1][col - 1][i]
-            key_arr[row % 4][col % 4] = (key_arr[row % 4][col % 4] + pix[0]) % 256
-            key_arr[(row + 1) % 4][col % 4] = (key_arr[(row + 1) % 4][col % 4] + pix[1]) % 256
-            key_arr[row % 4][(col + 1) % 4] = (key_arr[row % 4][(col + 1) % 4] + pix[2]) % 256
-    return image
-
 def decrypt_xor(image, key):
     binkey = bin(key)[2:].zfill(128)
     key_arr = np.zeros((4, 4), dtype=int)
