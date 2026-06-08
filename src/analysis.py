@@ -208,13 +208,6 @@ def plot_3d_rgb_histogram(image):
     g = g.flatten()
     r = r.flatten()
 
-    # Define histogram bins
-    hist_size = 32 # You can adjust the number of bins
-    bins = np.linspace(0, 256, hist_size + 1)
-
-    # Compute 3D histogram
-    hist, edges = np.histogramdd((r, g, b), bins=(bins, bins, bins))
-
     # Get bin centers
     r_edges, g_edges, b_edges = edges
     r_centers = (r_edges[:-1] + r_edges[1:]) / 2
