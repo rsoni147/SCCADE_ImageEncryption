@@ -130,27 +130,6 @@ def applyCA(image: np.ndarray, num_iters, encrypt=True):
         left = num_bin[-1] if encrypt else new_bin[-1]
     return flat.reshape(image.shape)
 
-def decrypt_xor(image, key):
-    binkey = bin(key)[2:].zfill(128)
-    key_arr = np.zeros((4, 4), dtype=int)
-    k = 0
-    for i in range(4):
-        for j in range(4):
-            key_arr[i][j] = int(binkey[k:k+8], 2)
-            k += 8
-    h, w, _ = image.shape
-    cipher = np.copy(image);
-    for row in range(h):
-        for col in range(w):
-            for i in range(3):
-                if row > 0 and col > 0:
-                    image[row][col][i] ^= cipher[row - 1][col - 1][i]
-                image[row][col][i] ^= key_arr[row % 4][col % 4]
-            key_arr[row % 4][col % 4] = (key_arr[row % 4][col % 4] + image[row][col][0]) % 256
-            key_arr[(row + 1) % 4][col % 4] = (key_arr[(row + 1) % 4][col % 4] + image[row][col][1]) % 256
-            key_arr[row % 4][(col + 1) % 4] = (key_arr[row % 4][(col + 1) % 4] + image[row][col][2]) % 256
-    return image
-
 def encrypt(image, dna_key, soliton_key):
     shuffled_image = block_shuffle(image, soliton_key, block_size=1)
     transformed_image = applyCA(shuffled_image, 2)
