@@ -77,35 +77,25 @@ pip install -r requirements.txt
 
 ---
 
-### Encryption
+### Encryption and Decryption
 
-```bash
-python encrypt.py input_image.png
-```
+Place the input image in the project directory or upload it when prompted.
+
+Execute:
+
+python sccade.py on vscode version 1.123.0.
 
 Generates:
 
 * Encrypted image
+* Decrypted Image
 * Encryption keys
 
----
-
-### Decryption
-
-```bash
-python decrypt.py encrypted_image.png
-```
-
-Generates:
-
-* Recovered image
-
----
 
 ### Statistical Analysis
 
 ```bash
-python analyze.py original_image.png encrypted_image.png
+python analysis.py original_image.png encrypted_image.png
 ```
 
 Calculates:
@@ -141,16 +131,6 @@ The SCCADE framework has been evaluated using:
 * MSE
 * PSNR
 * SSIM
-
-### Randomness Analysis
-
-* NIST Statistical Test Suite
-
-----
-
-The results demonstrate strong randomness, high entropy, low adjacent-pixel correlation, and robustness against statistical and differential attacks.
-
----
 
 ## Applications
 
